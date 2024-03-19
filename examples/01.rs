@@ -21,7 +21,10 @@ where
 }
 
 fn args_argument(prefixes: &[&str]) -> Option<String> {
-    args().skip(1).position(|s| prefixes.contains(&(s.as_str()))).and_then(|i| args().skip(1).nth(i + 1))
+    args()
+        .skip(1)
+        .position(|s| prefixes.contains(&(s.as_str())))
+        .and_then(|i| args().skip(1).nth(i + 1))
 }
 
 fn parse_args() -> Result<Reader<'static>, LineError> {
