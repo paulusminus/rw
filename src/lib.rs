@@ -2,7 +2,10 @@ use std::{
     error::Error,
     fmt::{Debug, Display},
     fs::{File, OpenOptions},
-    io::{read_to_string, stdin, stdout, Cursor, Error as IOError, Read, Result as IOResult, StdinLock, StdoutLock, Write},
+    io::{
+        read_to_string, stdin, stdout, Cursor, Error as IOError, Read, Result as IOResult,
+        StdinLock, StdoutLock, Write,
+    },
     path::Path,
 };
 
@@ -24,7 +27,9 @@ impl<'a> Reader<'a> {
     }
 
     pub fn memory(init: Option<String>) -> IOResult<Reader<'a>> {
-        Ok(Reader::Memory(Cursor::new(init.map(|s| s.into_bytes()).unwrap_or_default())))
+        Ok(Reader::Memory(Cursor::new(
+            init.map(|s| s.into_bytes()).unwrap_or_default(),
+        )))
     }
 }
 
@@ -64,10 +69,10 @@ impl<'a> Writer<'a> {
             Writer::Memory(mut cursor) => {
                 cursor.set_position(0);
                 read_to_string(cursor)
-            },
-            _ => Err(IOError::new(std::io::ErrorKind::NotFound, "no buffer"))
+            }
+            _ => Err(IOError::new(std::io::ErrorKind::NotFound, "no buffer")),
         }
-    } 
+    }
 }
 
 impl<'a> Write for Writer<'a> {
@@ -134,16 +139,23 @@ mod test {
 
     use crate::{Reader, Writer};
 
-    const TEST_STRING: &str = "Hallo allemaal\nWat fijn dat u er bent\nHallo Paul\nWat fijn dat jij er bent";
+    const TEST_STRING: &str =
+        "Hallo allemaal\nWat fijn dat u er bent\nHallo Paul\nWat fijn dat jij er bent";
 
     #[test]
     fn memory_reader() {
         let r = Reader::memory(Some(TEST_STRING.to_owned())).unwrap();
         let mut lines = BufReader::new(r).lines();
         assert_eq!(lines.next().unwrap().unwrap(), "Hallo allemaal".to_owned());
-        assert_eq!(lines.next().unwrap().unwrap(), "Wat fijn dat u er bent".to_owned());
+        assert_eq!(
+            lines.next().unwrap().unwrap(),
+            "Wat fijn dat u er bent".to_owned()
+        );
         assert_eq!(lines.next().unwrap().unwrap(), "Hallo Paul".to_owned());
-        assert_eq!(lines.next().unwrap().unwrap(), "Wat fijn dat jij er bent".to_owned());
+        assert_eq!(
+            lines.next().unwrap().unwrap(),
+            "Wat fijn dat jij er bent".to_owned()
+        );
     }
 
     #[test]
