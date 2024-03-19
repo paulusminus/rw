@@ -65,7 +65,7 @@ impl<'a> Writer<'a> {
                 cursor.set_position(0);
                 read_to_string(cursor)
             },
-            _ => Ok(String::new())
+            _ => Err(IOError::new(std::io::ErrorKind::NotFound, "no buffer"))
         }
     } 
 }
