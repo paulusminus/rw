@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "test-polymorphic-io"
+name = "rw"
 version = "0.1.0"
