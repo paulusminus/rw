@@ -1,4 +1,4 @@
-![`build-badge`]
+[![`build-badge`]](https://github.com/paulusminus/rw/actions/workflows/rust.yml)
 [![`mit-badge`]](https://opensource.org/licenses/MIT)
 
 # rw
