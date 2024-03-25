@@ -3,7 +3,7 @@ use std::{
     io::{BufRead, BufReader, Read},
 };
 
-use rw::generic::reader::Reader;
+use rw::generic::Reader;
 use rw::{error_line, LineError};
 
 fn process_lines<F, R>(f: F) -> impl Fn(R) -> Result<(), LineError>

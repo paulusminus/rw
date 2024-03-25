@@ -1,4 +1,6 @@
-pub mod reader {
+pub use {reader::Reader, writer::Writer};
+
+mod reader {
     use std::fs::{File, OpenOptions};
     use std::io::{stdin, Cursor, Read, Stdin};
     use std::path::Path;
@@ -8,7 +10,7 @@ pub mod reader {
     }
 
     impl Reader {
-        pub fn new() -> Self {
+        fn new() -> Self {
             Self { inner: stdin() }
         }
 
@@ -61,7 +63,7 @@ pub mod reader {
     }
 }
 
-pub mod writer {
+mod writer {
     use std::fs::{File, OpenOptions};
     use std::io::{stdout, Cursor, Stdout, Write};
     use std::path::Path;
@@ -71,7 +73,7 @@ pub mod writer {
     }
 
     impl Writer {
-        pub fn new() -> Self {
+        fn new() -> Self {
             Self { inner: stdout() }
         }
 
@@ -109,7 +111,6 @@ pub mod writer {
     #[cfg(test)]
     mod test {
         use crate::generic::{reader::Reader, writer::Writer};
-        use std::fs::remove_file;
         use std::io::{read_to_string, Write};
 
         #[test]
@@ -121,22 +122,22 @@ pub mod writer {
 
         #[test]
         fn to_file() {
-            const FILENAME: &str = "Jaja.txt";
             const TEST_STRING: &str = "Hallo allemaal";
 
+            let file = tempfile::NamedTempFile::new().unwrap();
+            let filename = file.into_temp_path().canonicalize().unwrap();
+
             {
-                let mut writer = Writer::try_to_file(FILENAME).unwrap();
+                let mut writer = Writer::try_to_file(filename.as_path()).unwrap();
                 writer.write(TEST_STRING.as_bytes()).unwrap();
                 writer.flush().unwrap();
             }
 
             {
-                let reader = Reader::try_from_file(FILENAME).unwrap();
+                let reader = Reader::try_from_file(filename.as_path()).unwrap();
                 let s = read_to_string(reader).unwrap();
                 assert_eq!(s, *TEST_STRING);
             }
-
-            remove_file(FILENAME).unwrap();
         }
     }
 }

@@ -4,3 +4,6 @@ description = "Polimorphic Reader and Writer"
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
+
+[dev-dependencies]
+tempfile = "3.10.1"
