@@ -79,7 +79,7 @@ mod writer {
 
         pub fn try_to_file<P: AsRef<Path>>(path: P) -> Result<Writer<File>, std::io::Error> {
             OpenOptions::new()
-                .create(true)
+                .create_new(true)
                 .write(true)
                 .open(path)
                 .map(|file| Writer { inner: file })
