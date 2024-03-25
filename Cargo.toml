@@ -1,8 +1,10 @@
-[package]
-name = "rw"
-description = "Polimorphic Reader and Writer"
-version = "0.1.0"
-edition = "2021"
-license = "MIT"
+[workspace]
+resolver = "2"
+members = [
+    "crates/example",
+    "crates/rw",
+]
 
-[dependencies]
+[profile.release]
+strip = true
+lto = true
