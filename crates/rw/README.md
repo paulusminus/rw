@@ -20,7 +20,7 @@ let reader = Reader::default();
 ```no_run
 use rw::generic::reader::Writer;
 
-// use stdin
+// use stdout
 let mut writer = Writer::default();
 ```
 
