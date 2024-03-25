@@ -9,6 +9,8 @@ use std::{
     path::Path,
 };
 
+pub mod generic;
+
 pub enum Reader<'a> {
     Stdin(StdinLock<'a>),
     File(File),

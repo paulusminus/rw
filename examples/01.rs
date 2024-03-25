@@ -3,7 +3,7 @@ use std::{
     io::{BufRead, BufReader, Read},
 };
 
-use rw::{error_line, LineError, Reader};
+use rw::{error_line, LineError};
 
 fn process_lines<F, R>(f: F) -> impl Fn(R) -> Result<(), LineError>
 where
@@ -27,13 +27,15 @@ fn args_argument(prefixes: &[&str]) -> Option<String> {
         .and_then(|i| args().skip(1).nth(i + 1))
 }
 
-fn parse_args() -> Result<Reader<'static>, LineError> {
-    args_argument(&["-f", "--file"])
-        .map(Reader::from_file)
-        .unwrap_or(Ok(Reader::default()))
-        .map_err(error_line(None))
+fn print(s: String) {
+    println!("{}", s);
 }
 
 fn main() -> Result<(), LineError> {
-    parse_args().and_then(process_lines(|s| println!("{}", s)))
+    match args_argument(&["-f", "--file"]).map(rw::generic::reader::Reader::try_from_file) {
+        Some(file_result) => file_result
+            .map_err(error_line(None))
+            .and_then(process_lines(print)),
+        None => process_lines(print)(rw::generic::reader::Reader::default()),
+    }
 }
