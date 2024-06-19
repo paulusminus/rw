@@ -1,9 +1,9 @@
 use std::{
     env::args,
-    io::{BufRead, BufReader, Read},
+    io::{stdin, BufRead, BufReader, Read},
 };
 
-use rw::generic::Reader;
+// use rw::generic::Reader;
 use rw::{error_line, LineError};
 
 fn process_lines<F, R>(f: F) -> impl Fn(R) -> Result<(), LineError>
@@ -33,10 +33,10 @@ fn print(s: String) {
 }
 
 fn main() -> Result<(), LineError> {
-    match args_argument(&["-f", "--file"]).map(Reader::try_from_file) {
+    match args_argument(&["-f", "--file"]).map(std::fs::File::open) {
         Some(file_result) => file_result
             .map_err(error_line(None))
             .and_then(process_lines(print)),
-        None => Ok(Reader::default()).and_then(process_lines(print)),
+        None => Ok(stdin()).and_then(process_lines(print)),
     }
 }
