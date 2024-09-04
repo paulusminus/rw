@@ -11,11 +11,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: Swatinem/rust-cache@v2
-    - name: Format
-      run: cargo fmt --check --verbose
-    - name: Clippy
-      run: cargo clippy -- -D warnings
-    - name: Build for x86_64
-      run: cargo build --release --verbose
+    - uses: paulusminus/rust-check@v5
+      with:
+        build: true
