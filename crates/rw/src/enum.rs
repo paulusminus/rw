@@ -13,7 +13,7 @@ pub enum Reader<'a> {
     Memory(Cursor<Vec<u8>>),
 }
 
-impl<'a> Default for Reader<'a> {
+impl Default for Reader<'_> {
     fn default() -> Self {
         Reader::Stdin(stdin().lock())
     }
@@ -31,7 +31,7 @@ impl<'a> Reader<'a> {
     }
 }
 
-impl<'a> Read for Reader<'a> {
+impl Read for Reader<'_> {
     fn read(&mut self, buf: &mut [u8]) -> IOResult<usize> {
         match self {
             Self::File(file) => file.read(buf),
@@ -47,13 +47,13 @@ pub enum Writer<'a> {
     Memory(Cursor<Vec<u8>>),
 }
 
-impl<'a> Default for Writer<'a> {
+impl Default for Writer<'_> {
     fn default() -> Self {
         Self::Stdout(stdout().lock())
     }
 }
 
-impl<'a> Writer<'a> {
+impl Writer<'_> {
     pub fn from_file<P: AsRef<Path>>(p: P) -> IOResult<Self> {
         OpenOptions::new().write(true).open(p).map(Self::File)
     }
@@ -73,7 +73,7 @@ impl<'a> Writer<'a> {
     }
 }
 
-impl<'a> Write for Writer<'a> {
+impl Write for Writer<'_> {
     fn write(&mut self, buf: &[u8]) -> IOResult<usize> {
         match self {
             Self::File(file) => file.write(buf),
