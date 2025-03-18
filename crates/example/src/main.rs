@@ -1,10 +1,10 @@
 use std::{
     env::args,
-    io::{stdin, BufRead, BufReader, Read},
+    io::{BufRead, BufReader, Read, stdin},
 };
 
 // use rw::generic::Reader;
-use rw::{error_line, LineError};
+use rw::{LineError, error_line};
 
 fn process_lines<F, R>(f: F) -> impl Fn(R) -> Result<(), LineError>
 where

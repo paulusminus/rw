@@ -1,8 +1,8 @@
 use std::{
     fs::{File, OpenOptions},
     io::{
-        read_to_string, stdin, stdout, Cursor, Error as IOError, Read, Result as IOResult,
-        StdinLock, StdoutLock, Write,
+        Cursor, Error as IOError, Read, Result as IOResult, StdinLock, StdoutLock, Write,
+        read_to_string, stdin, stdout,
     },
     path::Path,
 };

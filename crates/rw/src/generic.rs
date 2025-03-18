@@ -2,7 +2,7 @@ pub use {reader::Reader, writer::Writer};
 
 mod reader {
     use std::fs::{File, OpenOptions};
-    use std::io::{stdin, Cursor, Read, Stdin};
+    use std::io::{Cursor, Read, Stdin, stdin};
     use std::path::Path;
 
     pub struct Reader<R: Read = Stdin> {
@@ -65,7 +65,7 @@ mod reader {
 
 mod writer {
     use std::fs::{File, OpenOptions};
-    use std::io::{stdout, Cursor, Stdout, Write};
+    use std::io::{Cursor, Stdout, Write, stdout};
     use std::path::Path;
 
     pub struct Writer<W: Write = Stdout> {
@@ -111,7 +111,7 @@ mod writer {
     #[cfg(test)]
     mod test {
         use crate::generic::{reader::Reader, writer::Writer};
-        use std::io::{read_to_string, Write};
+        use std::io::{Write, read_to_string};
 
         #[test]
         fn to_string() {

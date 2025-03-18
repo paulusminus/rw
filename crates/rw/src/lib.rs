@@ -1,4 +1,4 @@
-pub use line_erro::{error_line, LineError};
+pub use line_erro::{LineError, error_line};
 
 pub mod r#enum;
 pub mod generic;
