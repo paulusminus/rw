@@ -29,7 +29,7 @@ fn args_argument(prefixes: &[&str]) -> Option<String> {
 }
 
 fn print(s: String) {
-    println!("{}", s);
+    println!("{s}");
 }
 
 fn main() -> Result<(), LineError> {
